@@ -11,10 +11,10 @@ const AppLayout = () => {
 
   return (
     <div className={
-      `theme-${theme} h-screen flex flex-col justify-between bg-background text-text`
+      `theme-${theme} min-h-screen flex flex-col justify-between bg-background text-text`
     }>
       <Header toggleTheme={toggleTheme} />
-      <main className="container mx-auto p-4 h-full">
+      <main className="container flex-grow mx-auto p-4">
         <Outlet />
       </main>
       <Footer />
