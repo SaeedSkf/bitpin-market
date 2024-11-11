@@ -1,65 +1,48 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useContext } from 'react';
 
-import Tab from '../ui/Tab'
-import TabButton from '../ui/TabButton'
-import PriceModule from './PriceModule'
-import InfiniteScroll from 'react-infinite-scroll-component'
+import MarketsContext from '../store/markets-context';
+import Tab from '../ui/Tab';
+import TabButton from '../ui/TabButton';
+import PriceModule from './PriceModule';
+import InfiniteScroll from 'react-infinite-scroll-component';
 
-const FIRST_COIN = 'IRT';
-const SECOND_COIN = 'USDT';
+import { useMarketPagination, useTabScrollPositions, FIRST_COIN, SECOND_COIN } from '../hooks/useMarketTab';
 
-const MarketTab = ({ markets }) => {
-    const [selectedTab, setSelectedTab] = useState(FIRST_COIN)
-    const [firsCoinPage, setFirsCoinPage] = useState(1)
-    const [secondCoinPage, setSecondCoinPage] = useState(1)
+const MarketTab = () => {
+    const marketsCtx = useContext(MarketsContext);
+    const [selectedTab, setSelectedTab] = useState(FIRST_COIN);
 
-    const currentPage = selectedTab === FIRST_COIN ? firsCoinPage : secondCoinPage
-    const currentMarkets = markets.results
-        .filter((market) => market.currency2.code === selectedTab)
-        .slice(0, currentPage * 10)
+    const { paginatedMarkets, hasMore, handleNextPage } = useMarketPagination(marketsCtx.markets, selectedTab);
+    const { handleTabChange } = useTabScrollPositions(selectedTab);
 
-    const hasMore = currentMarkets.length < markets.results.filter((market) => market.currency2.code === selectedTab).length
-
-    const handleNextPage = () => {
-        if (selectedTab === FIRST_COIN) {
-            setFirsCoinPage((prevPage) => prevPage + 1)
-        } else {
-            setSecondCoinPage((prevPage) => prevPage + 1)
-        }
-    }
+    const onTabChange = (coin) => {
+        setSelectedTab(handleTabChange(coin));
+    };
 
     return (
-        <section className='sticky'>
-
+        <section className="sticky">
             <Tab
                 buttons={
                     <>
-                        <TabButton
-                            isActive={selectedTab === FIRST_COIN}
-                            onClick={() => setSelectedTab(FIRST_COIN)}
-                        >
+                        <TabButton isActive={selectedTab === FIRST_COIN} onClick={() => onTabChange(FIRST_COIN)}>
                             پایه تومان
                         </TabButton>
-                        <TabButton
-                            isActive={selectedTab === SECOND_COIN}
-                            onClick={() => setSelectedTab(SECOND_COIN)}
-                        >
+                        <TabButton isActive={selectedTab === SECOND_COIN} onClick={() => onTabChange(SECOND_COIN)}>
                             پایه تتر
                         </TabButton>
                     </>
                 }
             >
                 <InfiniteScroll
-                    dataLength={currentMarkets.length}
+                    dataLength={paginatedMarkets.length}
                     hasMore={hasMore}
                     next={handleNextPage}
                 >
-                    <PriceModule markets={currentMarkets} />
+                    <PriceModule markets={paginatedMarkets} />
                 </InfiniteScroll>
             </Tab>
+        </section>
+    );
+};
 
-        </section >
-    )
-}
-
-export default MarketTab
+export default MarketTab;

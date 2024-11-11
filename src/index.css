@@ -9,6 +9,10 @@
     font-family: 'Rubik', sans-serif;
 }
 
+::-webkit-scrollbar {
+    display: none;
+}
+
 @layer base {
     :root {
         --color-primary: #4ef09d;

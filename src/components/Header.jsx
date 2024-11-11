@@ -4,9 +4,9 @@ import Button from "../ui/Button";
 
 const Header = ({ toggleTheme }) => {
     return (
-        <header className="p-4">
+        <header className="px-10 py-5">
             <nav className="container mx-auto flex place-items-center justify-between">
-                <Link to="/" className="text-2xl font-bold">بیت‌پین</Link>
+                <Link to="/" className="text-4xl m-4 font-bold text-primary">بیت‌پین</Link>
                 <Button onClick={toggleTheme}>
                     تغییر تم
                 </Button>
