@@ -1,17 +1,16 @@
-import { Image } from 'react'
 import PriceRow from '../ui/PriceRow'
 
 const PriceModule = ({ markets }) => {
-    console.log(markets.results)
     return (
-        <div className='flex flex-col gap-3 py-3'>
-            {markets.results.map((market) =>
+        <div className='flex flex-col'>
+            {markets.map((market) =>
                 <PriceRow
                     key={market.id}
                     firstImage={market.currency1.image}
                     secondImage={market.currency2.image}
-                    title={market.currency2.title_fa}
-                    subtitle={`${market.currency1.code}/${market.currency2.code}`}
+                    title={market.currency1.title_fa}
+                    code1={market.currency1.code}
+                    code2={market.currency2.code}
                     price={market.price}
                     currency={market.currency2.title_fa}
                 />

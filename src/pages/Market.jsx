@@ -6,7 +6,7 @@ const Market = () => {
   const { isLoading, markets, error } = useMarket();
   return (
     <>
-      <div className='flex flex-col gap-3 mx-20'>
+      <div className='flex flex-col gap-3 mx-20 relative'>
         <section>
           <h1 className='font-bold text-2xl'>قیمت ارزهای دیجیتال</h1>
           <p className='text-sm text-gray-400'>فروش و خرید ارز دیجیتال با امنیت بالا</p>

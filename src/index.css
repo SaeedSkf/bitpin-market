@@ -17,7 +17,7 @@
     }
 
     * {
-        @apply transition-colors duration-300 ease-in-out;
+        @apply transition-colors duration-200 ease-in-out;
     }
 }
 

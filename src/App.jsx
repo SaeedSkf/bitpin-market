@@ -3,6 +3,8 @@ import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 
 import AppLayout from "./layouts/AppLayout";
 import Market from "./pages/Market"
+import StickyScrollComponent from "./components/StickyScrollComponent";
+
 function App() {
   const client = new QueryClient();
   const router = createBrowserRouter([
@@ -16,7 +18,7 @@ function App() {
         },
         {
           path: ":id",
-          element: <div>Marke333t</div>
+          element: <StickyScrollComponent />
         },
       ]
     },
